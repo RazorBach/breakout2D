@@ -2,8 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-#include "game.h"
-#include "resource_manager.h"
+#include "Game.h"
+#include "Resource_manager.h"
 
 
 // GLFW function declerations
@@ -31,8 +31,8 @@ int main(int argc, char *argv[])
 
 														 // glfw window creation
 														 // --------------------
-	GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Breakout", NULL, NULL);
-	if (window == NULL)
+	GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Breakout", nullptr, nullptr);
+	if (nullptr == window)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
 
 	// tell GLFW to capture our mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetKeyCallback(window, key_callback);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------

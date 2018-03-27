@@ -9,5 +9,5 @@ uniform mat4 projection;
 
 void main() {
 	Texcoords = vertex.zw;
-	gl_Position = projection * model * vec4(vectex.xy, 0.f, 1.f);
+	gl_Position = projection * model * vec4(vertex.xy, 0.f, 1.f);
 }

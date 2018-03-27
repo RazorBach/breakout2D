@@ -19,19 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ball_object.h" />
     <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\resource_manager.h" />
-    <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\Game_level.h" />
+    <ClInclude Include="src\Game_object.h" />
+    <ClInclude Include="src\Resource_manager.h" />
+    <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\Sprite_renderer.h" />
     <ClInclude Include="src\stb_image.h" />
-    <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ball_object.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Game_level.cpp" />
+    <ClCompile Include="src\Game_object.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\resource_manager.cpp" />
-    <ClCompile Include="src\shader.cpp" />
-    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\Resource_manager.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Sprite_renderer.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
