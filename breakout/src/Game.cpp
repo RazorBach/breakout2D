@@ -98,17 +98,63 @@ void Game::ProcessInput(GLfloat dt)
 
 void Game::DoCollisions()
 {
+	//Óëµ²°åÏà×²
+	Collision result = CheckCollision(*ball, *player);
+	if (!ball->stuck && std::get<0>(result)) {
+		GLfloat center = player->position.x + player->size.x / 2;
+		GLfloat distance = (ball->position.x + ball->radius) - center;
+		GLfloat percent = distance / (player->size.x / 2);
+		GLfloat strength = 4.f;
+		glm::vec2 oldv = ball->velocity;
+		ball->velocity.x = INITIAL_BALL_VELOCITY.x * percent * strength;
+		ball->velocity.y = -ball->velocity.y;
+		ball->velocity = glm::normalize(ball->velocity) * glm::length(oldv);
+	}
+	//Óë×©¿éÏà×²
 	for (GameObject& box : this->levels[this->level].bricks) {
 		if (!box.isDestroyed) {
-			if (checkCollision(*ball, box)) {
+			Collision collision = CheckCollision(*ball, box);
+			if (std::get<0>(collision)) {
 				if (!box.isSolid)
 					box.isDestroyed = GL_TRUE;
+				Direction dir = std::get<1>(collision);
+				glm::vec2 diff_vec = std::get<2>(collision);
+				if (dir == LEFT || dir == RIGHT) {
+					//horizontal
+					ball->velocity.x *= -1;
+					//penetration ÉøÍ¸
+					GLfloat penetration = ball->radius - std::abs(diff_vec.x);
+					if (dir == LEFT)
+						ball->position.x += penetration;
+					else
+						ball->position.x -= penetration;
+				}
+				else {
+					//vertical
+					ball->velocity.y *= -1;
+					GLfloat penetration = ball->radius - std::abs(diff_vec.y);
+					if (dir == UP)
+						ball->position.y -= penetration;
+					else
+						ball->position.y += penetration;
+
+				}
 			}
 		}
 	}
 }
+GLboolean Game::CheckCollision(GameObject &one, GameObject &two) {
+	// x-axis
+	bool collisionX = one.position.x + one.size.x >= two.position.x &&
+		two.position.x + two.size.x >= one.position.x;
+	// y-axis
+	bool collisionY = one.position.y + one.size.y >= two.position.y &&
+		two.position.y + two.size.y >= one.position.y;
 
-GLboolean  Game::checkCollision(BallObject & one, GameObject & two)
+	return (GLboolean)(collisionX && collisionY);
+}
+
+Collision  Game::CheckCollision(BallObject &one, GameObject & two)
 {
 	glm::vec2 center(one.position + one.radius);
 	//AABB
@@ -122,5 +168,27 @@ GLboolean  Game::checkCollision(BallObject & one, GameObject & two)
 	//closest point on border
 	glm::vec2 closest = aabb_center + c2b;
 	glm::vec2 diff = closest - center;
-	return glm::length(diff) < one.radius;
+	if (glm::length(diff) <= one.radius)
+		return std::make_tuple(GL_TRUE, VectorDirection(diff), diff);
+	return std::make_tuple(GL_FALSE, UP, glm::vec2(0, 0));
+}
+
+Direction Game::VectorDirection(glm::vec2 target)
+{
+	glm::vec2 compass[] = {
+		glm::vec2(0.0f, 1.0f),
+		glm::vec2(1.0f, 0.0f),
+		glm::vec2(0.0f, -1.0f),
+		glm::vec2(-1.0f, 0.0f)
+	};
+	GLfloat max = 0.0f;
+	GLint bestMatch = -1;
+	for (GLint i = 0; i < 4; i++) {
+		GLfloat dotProduct = glm::dot(glm::normalize(target), compass[i]);
+		if (dotProduct > max) {
+			max = dotProduct;
+			bestMatch = i;
+		}
+	}
+	return (Direction)bestMatch;
 }

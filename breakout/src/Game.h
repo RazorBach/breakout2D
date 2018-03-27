@@ -52,7 +52,8 @@ public:
 private:
 	std::shared_ptr<SpriteRenderer> renderer;
 
-	GLboolean checkCollision(GameObject &one, GameObject &two);
-	GLboolean checkCollision(BallObject &one, GameObject &two);
+	GLboolean CheckCollision(GameObject &one, GameObject &two);
+	Collision CheckCollision(BallObject &one, GameObject &two);
+	Direction VectorDirection(glm::vec2 target);
 };
 #endif // !GAME_H
