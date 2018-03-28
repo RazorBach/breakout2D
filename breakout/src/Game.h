@@ -5,6 +5,7 @@
 #include "Sprite_renderer.h"
 #include "Game_level.h"
 #include "Ball_object.h"
+#include "Particle_generator.h"
 
 enum Direction {
 	UP, RIGHT, DOWN, LEFT
@@ -41,6 +42,8 @@ public:
 	void Init();
 	void Render();
 	void Update(GLfloat dt);
+	void ResetLevel();
+	void ResetPlayer();
 	void ProcessInput(GLfloat dt);
 	void DoCollisions();
 
@@ -51,6 +54,7 @@ public:
 
 private:
 	std::shared_ptr<SpriteRenderer> renderer;
+	std::unique_ptr<ParticleGenerator> particleGenerator;
 
 	GLboolean CheckCollision(GameObject &one, GameObject &two);
 	Collision CheckCollision(BallObject &one, GameObject &two);

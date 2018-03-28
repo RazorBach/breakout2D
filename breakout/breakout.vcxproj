@@ -23,6 +23,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Game_level.h" />
     <ClInclude Include="src\Game_object.h" />
+    <ClInclude Include="src\Particle_generator.h" />
     <ClInclude Include="src\Resource_manager.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Sprite_renderer.h" />
@@ -36,6 +37,7 @@
     <ClCompile Include="src\Game_object.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Particle_generator.cpp" />
     <ClCompile Include="src\Resource_manager.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Sprite_renderer.cpp" />
